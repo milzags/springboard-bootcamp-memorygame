@@ -14,7 +14,24 @@ class MemoryGame {
         this.timeRemaining = this.totalTime;
         this.matchedCardsArr = [];
         this.busy = true; //
-        this.shuffleCards();
+        
+        setTimeout(() => {
+            this.shuffleCards();
+            this.countDown = this.startCountDown();
+            this.busy = false;
+        },500)
+
+        this.hideCards();
+        this.timer.innerText = this.timeRemaining; //resetting ticker and timer
+        this.ticker.innerText = this.totalClicks;
+    }
+
+    hideCards() {
+        //loop through cards array and remove visibile and matched classes
+        this.cardsArray.forEach(card => {
+            card.classList.remove('visible');
+            card.classList.remove('matched');
+        });
     }
 
     flipCard(card) {
@@ -23,6 +40,21 @@ class MemoryGame {
             this.ticker.innerText = this.totalClicks;
             card.classList.add('flip');
         }
+    }
+
+    startCountDown() {
+        return setInterval(() => {
+            this.timeRemaining -= 1;
+            this.timer.innerText = this.timeRemaining;
+            if (this.timeRemaining <= 0 ){
+                this.gameOver();
+            }
+        },1000);
+    }
+
+    gameOver() {
+        clearInterval(this.countDown);
+        document.getElementById('game-over-text').classList.add('visible');
     }
 
     shuffleCards() {
@@ -53,7 +85,7 @@ function play() {
     });
 
     cards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (event) => {
             event.preventDefault();
             game.flipCard(card);
         

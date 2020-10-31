@@ -63,22 +63,11 @@ html {
     width: 125px;
     box-shadow: black;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transform: scale(1);
-    transition: transform 500ms ease-in-out;
+    /* transform: scale(1);
+    transition: transform 500ms ease-in-out; */
+    /* transform: rotateY(180deg);
+    transition: transform 1s ease-in-out; */
 }
-
-/* .card:active {
-    transform: rotateY(-180deg);
-    transition: transform 500ms ease-in-out;
-}
-
-.card.visible.card-back {
-    transform: rotateY(-180deg);
-}
-
-.card.visible.card-front {
-    transform: rotateY(0);
-} */
 
 .card.visible.card-back #red {
     background-color: red;
@@ -118,7 +107,7 @@ html {
     background-color: rgba(0,0,0,0.85);
     font-family: 'Krona One', seif;
     display: none;
-    font-size: 4em;
+    font-size: 1em;
 }
 
 .overlay-text.visible {
@@ -127,14 +116,20 @@ html {
     text-transform: uppercase;
 }
 
-@keyframs overlay-grow {
+#game-over-text.visible {
+    display: flex; 
+    animation: overlay-grow 500ms forwards;
+    text-transform: uppercase;
+}
+
+@keyframes overlay-grow {
     from {
         background-color: rgba(0,0,0,0);
         font-size: 0;
     }
 
     to {
-        font-size: 10em;
+        font-size: 5em;
         background-color: rgba(0,0,0,0.8);
     }
 }
