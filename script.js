@@ -39,14 +39,51 @@ class MemoryGame {
             this.totalClicks += 1;
             this.ticker.innerText = this.totalClicks;
             card.classList.add('visible');
+            
+
+            if (this.cardToCheck) {
+                //check for match
+                this.checkForCardMatch(card);
+            } else {
+                this.cardToCheck = card;
+            }
         }
+    }
+
+    checkForCardMatch(card) {
+        if (this.getCardType(card) === this.getCardType(this.cardToCheck)) {
+            this.checkForCardMatch(card,this.cardToCheck);
+        } else {
+            this.cardMisMatch(card, this.cardToCheck);
+        }
+
+        this.cardToCheck = null;
+    }
+
+    cardMatch(card1, card2) {
+        this.matchedCardsArr.push(card1);
+        this.matchedCardsArr.push(card2);
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        if(this.matchedCardsArr.length === this.cardsArray.length) {
+            this.victory();
+        }
+    }
+
+    cardMisMatch(card1, card2) {
+        this.busy = true;
+        setTimeout(()=> {
+            card1.classList.remove('visible');
+            card2.classList.remove('visible');
+            this.busy = false;
+        },1000)
     }
 
     startCountDown() {
         return setInterval(() => {
             this.timeRemaining -= 1;
             this.timer.innerText = this.timeRemaining;
-            if (this.timeRemaining <= 0 ){
+            if (this.timeRemaining === 0 ){
                 this.gameOver();
             }
         },1000);
@@ -55,6 +92,11 @@ class MemoryGame {
     gameOver() {
         clearInterval(this.countDown);
         document.getElementById('game-over-text').classList.add('visible');
+    }
+
+    victory() {
+        clearInterval(this.countDown);
+        document.getElementById('you-win-text').classList.add('visible');
     }
 
     shuffleCards() {
@@ -66,8 +108,8 @@ class MemoryGame {
     }
 
     canFlipCard(card) {
-        // return !this.busy && !this.matchedCardsArr.includes(card) && card !== this.cardToCheck;
-        return true;
+        return !this.busy && !this.matchedCardsArr.includes(card) && card !== this.cardToCheck;
+        
     }
 }
 
