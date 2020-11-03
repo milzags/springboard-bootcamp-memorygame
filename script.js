@@ -39,7 +39,7 @@ class MemoryGame {
             this.totalClicks += 1;
             this.ticker.innerText = this.totalClicks;
             card.classList.add('visible');
-            
+                       
 
             if (this.cardToCheck) {
                 //check for match
