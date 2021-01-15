@@ -62,7 +62,7 @@ html {
     width: 125px;
     box-shadow: black;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transform: scale(1);
+    transform: scale(0.88);
     transition: transform 200ms ease-in-out;
 }
 
